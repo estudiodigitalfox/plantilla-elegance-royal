@@ -39,5 +39,10 @@ const CONFIG = {
   // CONEXIÓN CON GOOGLE
   // ==========================
 
+  mesaHabilitada: true,
+
+// true = muestra la mesa asignada
+// false = oculta por completo la mesa
+
   scriptURL: ""
 };
