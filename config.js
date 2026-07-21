@@ -1,33 +1,43 @@
 const CONFIG = {
-
   // ==========================
   // DATOS DEL EVENTO
   // ==========================
 
-  nombreEvento: "XV Kimberly",
+  nombreEvento: "XV Daira Sayuri",
 
-  fechaLimiteTexto: "19 de diciembre de 2026",
-
-  fechaLimiteSistema: "2026-12-19T23:59:59",
+  fechaLimiteTexto: "Fecha límite por definir",
+  fechaLimiteSistema: "2026-12-20T23:59:59",
 
   // ==========================
   // DISEÑO
   // ==========================
 
-  colorPrincipal: "#8F5BD7",
+  colorPrincipal: "#7A4FA3",
+  colorSecundario: "#F5EEFA",
+  colorDetalle: "#D4AF37",
 
-  colorSecundario: "#F2EAFF",
-
-  animacion: "mariposas",
-
-  animacionColor: true,
+  animacion: "estrellas",
+  usarColorPrincipalEnAnimacion: true,
 
   // ==========================
-  // SISTEMA
+  // CONFIRMACIÓN PERSONALIZADA
   // ==========================
 
-  modoConfirmacion: "elegance",
+  solicitarCodigo: true,
+  permitirModificarConfirmacion: false,
+
+  // ==========================
+  // PASE DIGITAL
+  // ==========================
+
+  qrHabilitado: true,
+
+  // true = muestra QR y permite guardar el pase
+  // false = confirma familia, mesa y asistentes sin mostrar QR
+
+  // ==========================
+  // CONEXIÓN CON GOOGLE
+  // ==========================
 
   scriptURL: ""
-
 };
