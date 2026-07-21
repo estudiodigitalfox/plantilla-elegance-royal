@@ -44,5 +44,5 @@ const CONFIG = {
 // true = muestra la mesa asignada
 // false = oculta por completo la mesa
 
-  scriptURL: ""
+  scriptURL: "https://script.google.com/macros/s/AKfycbzxgbaVReMCdfd5mc1a1iylEZMdYuJekPJyubi0qGOXJEDvCuF_5da9u6GHdaIImZFBhw/exec"
 };
