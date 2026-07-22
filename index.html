@@ -8,7 +8,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Confirmar asistencia</title>
+  <title>Confirmación personalizada</title>
 
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="animaciones.css">
@@ -16,120 +16,176 @@
   <script src="config.js"></script>
   <script src="iconos.js"></script>
   <script src="animaciones.js"></script>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+  </script>
 </head>
 
 <body>
   <main class="card">
 
-    <!-- FORMULARIO -->
-    <section id="contenedorFormulario">
+    <!-- =========================
+         ACCESO CON CÓDIGO
+    ========================== -->
+    <section id="pantallaCodigo">
 
-      <h1>💌 Confirma tu asistencia</h1>
+      <h1>✨ Bienvenido</h1>
 
       <p>
-        Nos llenará de alegría compartir este momento contigo.
+        Ingresa el código que recibiste junto con tu invitación.
       </p>
 
-      <div class="fecha-limite">
-        📅 Fecha límite para confirmar:<br>
-        <strong id="fechaLimiteTexto"></strong>
+      <label for="codigoInvitacion">
+        Código de invitación
+      </label>
+
+      <input
+        id="codigoInvitacion"
+        type="text"
+        autocomplete="off"
+        autocapitalize="characters"
+        placeholder="Ejemplo: DAIRA001"
+      >
+
+      <div id="errorCodigo" class="error"></div>
+
+      <button id="botonContinuar" type="button">
+        Continuar
+      </button>
+
+    </section>
+
+
+    <!-- =========================
+         CONFIRMACIÓN
+    ========================== -->
+    <section id="pantallaConfirmacion" class="oculto">
+
+      <p class="etiqueta-evento" id="nombreEvento"></p>
+
+      <h1>Confirma tu asistencia</h1>
+
+      <p class="familia-royal" id="nombreFamilia"></p>
+
+      <div class="resumen-invitacion">
+
+        <div id="bloqueMesa" class="dato-destacado">
+          <span>Mesa asignada</span>
+          <strong id="numeroMesa"></strong>
+        </div>
+
+        <div class="dato-destacado">
+          <span>Pases asignados</span>
+          <strong id="pasesAsignados"></strong>
+        </div>
+
       </div>
 
-      <form id="formularioConfirmacion" novalidate>
+      <label for="personasConfirmadas">
+        ¿Cuántas personas asistirán?
+      </label>
 
-        <label for="nombreCompleto">
-          Nombre completo
-        </label>
+      <select id="personasConfirmadas">
+        <option value="">Selecciona una opción</option>
+      </select>
 
-        <input
-          id="nombreCompleto"
-          name="nombre"
-          type="text"
-          autocomplete="name"
-        >
+      <div id="errorPersonas" class="error">
+        Indícanos cuántas personas asistirán para preparar su lugar.
+      </div>
 
-        <div class="nota">
-          Por favor escribe tu nombre completo para poder identificar tu confirmación.
-        </div>
+      <label for="mensaje">
+        ¿Deseas dejar un mensaje para los anfitriones?
+      </label>
 
-        <div id="errorNombre" class="error">
-          Por favor escribe tu nombre completo para poder identificar tu confirmación.
-        </div>
+      <textarea
+        id="mensaje"
+        placeholder="Escribe tu mensaje aquí (opcional)"
+      ></textarea>
 
-        <label for="asistencia">
-          ¿Podrás acompañarnos?
-        </label>
+      <button id="botonConfirmar" type="button">
+        Confirmar
+      </button>
 
-        <select id="asistencia" name="asiste">
-          <option value="">Selecciona una opción</option>
-          <option value="Sí">Sí</option>
-          <option value="No">No</option>
-        </select>
+      <button id="botonRegresar" class="boton-secundario" type="button">
+        Usar otro código
+      </button>
 
-        <div id="errorAsistencia" class="error">
-          Por favor indica si podrás acompañarnos.
-        </div>
+    </section>
 
-        <div id="contenedorPersonas" class="campo-personas">
 
-          <label for="numeroPersonas">
-            ¿Cuántas personas asistirán?
-          </label>
+    <!-- =========================
+         PASE CONFIRMADO
+    ========================== -->
+    <section id="pantallaPase" class="oculto">
 
-          <input
-            id="numeroPersonas"
-            name="personas"
-            type="number"
-            min="1"
-            inputmode="numeric"
-          >
+      <div class="check">✓</div>
 
-          <div id="errorPersonas" class="error">
-            Indícanos cuántas personas asistirán para preparar tu lugar.
+      <h1 id="tituloPase">
+        ¡Gracias por confirmar!
+      </h1>
+
+      <p id="textoPase">
+        Tu respuesta fue registrada correctamente.
+      </p>
+
+      <div id="paseDigital" class="pase-digital">
+
+        <p class="pase-evento" id="paseEvento"></p>
+
+        <p class="pase-etiqueta">
+          Pase digital
+        </p>
+
+        <h2 id="paseFamilia"></h2>
+
+        <div class="pase-datos">
+
+          <div id="paseMesaBloque">
+            <span>Mesa</span>
+            <strong id="paseMesa"></strong>
+          </div>
+
+          <div>
+            <span>Accesos</span>
+            <strong id="pasePersonas"></strong>
           </div>
 
         </div>
 
-        <label for="mensaje">
-          ¿Deseas dejar un mensaje para los anfitriones?
-        </label>
+        <div id="zonaQR" class="zona-qr oculto">
 
-        <textarea
-          id="mensaje"
-          name="mensaje"
-          placeholder="Escribe tu mensaje aquí (opcional)"
-        ></textarea>
+          <div id="qrContenedor"></div>
 
-        <button id="botonConfirmar" type="submit">
-          Confirmar
-        </button>
+          <p class="qr-aviso">
+            Presenta este código al ingresar al evento.
+          </p>
 
-      </form>
-    </section>
+        </div>
 
-    <!-- MENSAJE DE ÉXITO -->
-    <section id="contenedorGracias" class="oculto">
+      </div>
 
-      <div class="check">✓</div>
+      <button
+        id="botonGuardarPase"
+        class="oculto"
+        type="button">
+        Guardar pase en mi teléfono
+      </button>
 
-      <h1>¡Gracias por confirmar!</h1>
-
-      <p>
-        Tu respuesta ha sido enviada correctamente.
-      </p>
-
-      <p>
-        Será un verdadero gusto compartir este día tan especial contigo.
-      </p>
-
-      <button id="botonCerrar" type="button">
+      <button
+        id="botonCerrar"
+        class="boton-secundario"
+        type="button">
         Cerrar
       </button>
 
     </section>
 
-    <!-- CONFIRMACIONES CERRADAS -->
-    <section id="contenedorCerrado" class="oculto">
+
+    <!-- =========================
+         CONFIRMACIONES CERRADAS
+    ========================== -->
+    <section id="pantallaCerrada" class="oculto">
 
       <h1>💌 Confirmaciones cerradas</h1>
 
@@ -143,27 +199,13 @@
 
     </section>
 
-    <!-- ERROR DE ENVÍO -->
-    <section id="contenedorError" class="oculto">
-
-      <h1>No pudimos enviar tu confirmación</h1>
-
-      <p>
-        Verifica tu conexión a Internet e inténtalo nuevamente.
-      </p>
-
-      <button id="botonReintentar" type="button">
-        Intentar nuevamente
-      </button>
-
-    </section>
-
   </main>
 
+
   <script>
-    // ====================================
-    // APLICAR CONFIGURACIÓN DEL EVENTO
-    // ====================================
+    // ==========================================
+    // CONFIGURACIÓN VISUAL
+    // ==========================================
 
     document.documentElement.style.setProperty(
       "--color-principal",
@@ -175,201 +217,599 @@
       CONFIG.colorSecundario
     );
 
-    document.getElementById("fechaLimiteTexto").textContent =
-      CONFIG.fechaLimiteTexto;
+    document.documentElement.style.setProperty(
+      "--color-detalle",
+      CONFIG.colorDetalle || CONFIG.colorPrincipal
+    );
 
 
-    // ====================================
-    // ELEMENTOS DE LA PÁGINA
-    // ====================================
+    // ==========================================
+    // ESTADO
+    // ==========================================
 
-    const contenedorFormulario =
-      document.getElementById("contenedorFormulario");
+    let invitadoActual = null;
+    let codigoActual = "";
+    let qrActual = null;
 
-    const contenedorGracias =
-      document.getElementById("contenedorGracias");
 
-    const contenedorCerrado =
-      document.getElementById("contenedorCerrado");
+    // ==========================================
+    // ELEMENTOS
+    // ==========================================
 
-    const contenedorError =
-      document.getElementById("contenedorError");
+    const pantallaCodigo =
+      document.getElementById("pantallaCodigo");
 
-    const formulario =
-      document.getElementById("formularioConfirmacion");
+    const pantallaConfirmacion =
+      document.getElementById("pantallaConfirmacion");
 
-    const asistencia =
-      document.getElementById("asistencia");
+    const pantallaPase =
+      document.getElementById("pantallaPase");
 
-    const contenedorPersonas =
-      document.getElementById("contenedorPersonas");
+    const pantallaCerrada =
+      document.getElementById("pantallaCerrada");
+
+    const errorCodigo =
+      document.getElementById("errorCodigo");
+
+    const errorPersonas =
+      document.getElementById("errorPersonas");
+
+    const botonContinuar =
+      document.getElementById("botonContinuar");
 
     const botonConfirmar =
       document.getElementById("botonConfirmar");
 
+    const botonRegresar =
+      document.getElementById("botonRegresar");
+
+    const botonGuardarPase =
+      document.getElementById("botonGuardarPase");
+
     const botonCerrar =
       document.getElementById("botonCerrar");
 
-    const botonReintentar =
-      document.getElementById("botonReintentar");
 
-
-    // ====================================
+    // ==========================================
     // FECHA LÍMITE
-    // ====================================
+    // ==========================================
 
     const fechaLimite = new Date(CONFIG.fechaLimiteSistema);
-    const fechaActual = new Date();
 
-    if (fechaActual > fechaLimite) {
-      contenedorFormulario.classList.add("oculto");
-      contenedorCerrado.classList.remove("oculto");
+    if (new Date() > fechaLimite) {
+      pantallaCodigo.classList.add("oculto");
+      pantallaCerrada.classList.remove("oculto");
     }
 
 
-    // ====================================
-    // MOSTRAR NÚMERO DE PERSONAS
-    // ====================================
+    // ==========================================
+    // JSONP PARA APPS SCRIPT
+    // ==========================================
 
-    asistencia.addEventListener("change", () => {
-      const numeroPersonas =
-        document.getElementById("numeroPersonas");
+    function solicitarJSONP(parametros) {
+      return new Promise((resolve, reject) => {
+        const nombreCallback =
+          "callbackRoyal_" +
+          Date.now() +
+          "_" +
+          Math.floor(Math.random() * 10000);
 
-      if (asistencia.value === "Sí") {
-        contenedorPersonas.classList.add("visible");
-      } else {
-        contenedorPersonas.classList.remove("visible");
-        numeroPersonas.value = "";
-      }
+        const script = document.createElement("script");
 
-      document.getElementById("errorAsistencia").style.display = "none";
-    });
+        const url = new URL(CONFIG.scriptURL);
 
+        Object.entries(parametros).forEach(([clave, valor]) => {
+          url.searchParams.set(clave, valor);
+        });
 
-    // ====================================
-    // VALIDACIÓN
-    // ====================================
+        url.searchParams.set("callback", nombreCallback);
 
-    function validarFormulario() {
-      const nombre =
-        document.getElementById("nombreCompleto").value.trim();
+        const limpiar = () => {
+          delete window[nombreCallback];
+          script.remove();
+        };
 
-      const personas =
-        document.getElementById("numeroPersonas").value;
+        window[nombreCallback] = (respuesta) => {
+          limpiar();
+          resolve(respuesta);
+        };
 
-      const errorNombre =
-        document.getElementById("errorNombre");
+        script.onerror = () => {
+          limpiar();
+          reject(
+            new Error("No fue posible conectarse con la base de datos.")
+          );
+        };
 
-      const errorAsistencia =
-        document.getElementById("errorAsistencia");
+        script.src = url.toString();
+        document.body.appendChild(script);
 
-      const errorPersonas =
-        document.getElementById("errorPersonas");
-
-      errorNombre.style.display = "none";
-      errorAsistencia.style.display = "none";
-      errorPersonas.style.display = "none";
-
-      if (nombre === "") {
-        errorNombre.style.display = "block";
-        return false;
-      }
-
-      if (asistencia.value === "") {
-        errorAsistencia.style.display = "block";
-        return false;
-      }
-
-      if (asistencia.value === "Sí" && personas === "") {
-        errorPersonas.style.display = "block";
-        return false;
-      }
-
-      return true;
+        setTimeout(() => {
+          if (window[nombreCallback]) {
+            limpiar();
+            reject(
+              new Error("La conexión tardó demasiado tiempo.")
+            );
+          }
+        }, 15000);
+      });
     }
 
 
-    // ====================================
-    // ENVIAR CONFIRMACIÓN
-    // ====================================
+    // ==========================================
+    // CONSULTAR CÓDIGO
+    // ==========================================
 
-    formulario.addEventListener("submit", async (evento) => {
-      evento.preventDefault();
+    botonContinuar.addEventListener("click", consultarCodigo);
 
-      if (!validarFormulario()) {
+    document
+      .getElementById("codigoInvitacion")
+      .addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter") {
+          consultarCodigo();
+        }
+      });
+
+    async function consultarCodigo() {
+      codigoActual =
+        document
+          .getElementById("codigoInvitacion")
+          .value
+          .trim()
+          .toUpperCase();
+
+      errorCodigo.style.display = "none";
+      errorCodigo.textContent = "";
+
+      if (!codigoActual) {
+        errorCodigo.textContent =
+          "Por favor escribe tu código de invitación.";
+
+        errorCodigo.style.display = "block";
         return;
       }
 
-      if (!CONFIG.scriptURL) {
-        alert(
-          "Todavía falta agregar la URL de Apps Script en config.js."
-        );
+      botonContinuar.disabled = true;
+      botonContinuar.textContent = "Buscando invitación...";
+
+      try {
+        const respuesta = await solicitarJSONP({
+          accion: "consultar",
+          codigo: codigoActual
+        });
+
+        if (!respuesta.ok) {
+          errorCodigo.textContent =
+            respuesta.mensaje ||
+            "No encontramos una invitación con ese código.";
+
+          errorCodigo.style.display = "block";
+          return;
+        }
+
+        invitadoActual = respuesta.invitado;
+
+        if (respuesta.yaConfirmado) {
+          mostrarPase(
+            invitadoActual,
+            true
+          );
+        } else {
+          mostrarConfirmacion(invitadoActual);
+        }
+
+      } catch (error) {
+        errorCodigo.textContent =
+          "No pudimos consultar tu invitación. Inténtalo nuevamente.";
+
+        errorCodigo.style.display = "block";
+
+      } finally {
+        botonContinuar.disabled = false;
+        botonContinuar.textContent = "Continuar";
+      }
+    }
+
+
+    // ==========================================
+    // MOSTRAR DATOS PERSONALIZADOS
+    // ==========================================
+
+    function mostrarConfirmacion(invitado) {
+      document.getElementById("nombreEvento").textContent =
+        CONFIG.nombreEvento;
+
+      document.getElementById("nombreFamilia").textContent =
+        invitado.nombre;
+
+      document.getElementById("numeroMesa").textContent =
+        invitado.mesa || "Por asignar";
+
+      document.getElementById("pasesAsignados").textContent =
+        invitado.pasesAsignados;
+
+      const bloqueMesa =
+        document.getElementById("bloqueMesa");
+
+      if (CONFIG.mesaHabilitada && invitado.mesa) {
+        bloqueMesa.classList.remove("oculto");
+      } else {
+        bloqueMesa.classList.add("oculto");
+      }
+
+      crearOpcionesDePersonas(invitado.pasesAsignados);
+
+      pantallaCodigo.classList.add("oculto");
+      pantallaPase.classList.add("oculto");
+      pantallaConfirmacion.classList.remove("oculto");
+    }
+
+
+    function crearOpcionesDePersonas(maximo) {
+      const selector =
+        document.getElementById("personasConfirmadas");
+
+      selector.innerHTML =
+        '<option value="">Selecciona una opción</option>';
+
+      for (let cantidad = 1; cantidad <= maximo; cantidad++) {
+        const opcion = document.createElement("option");
+
+        opcion.value = cantidad;
+
+        opcion.textContent =
+          cantidad === 1
+            ? "1 persona"
+            : `${cantidad} personas`;
+
+        selector.appendChild(opcion);
+      }
+    }
+
+
+    // ==========================================
+    // CONFIRMAR
+    // ==========================================
+
+    botonConfirmar.addEventListener("click", confirmarAsistencia);
+
+    async function confirmarAsistencia() {
+      const personas =
+        document.getElementById("personasConfirmadas").value;
+
+      const mensaje =
+        document.getElementById("mensaje").value.trim();
+
+      errorPersonas.style.display = "none";
+
+      if (!personas) {
+        errorPersonas.style.display = "block";
         return;
       }
 
       botonConfirmar.disabled = true;
-      botonConfirmar.textContent = "Guardando confirmación...";
-
-      const datos = {
-        evento: CONFIG.nombreEvento,
-
-        nombre:
-          document.getElementById("nombreCompleto").value.trim(),
-
-        asiste: asistencia.value,
-
-        adultos:
-          asistencia.value === "Sí"
-            ? document.getElementById("numeroPersonas").value
-            : "0",
-
-        ninos: "0",
-
-        mensaje:
-          document.getElementById("mensaje").value.trim()
-      };
+      botonConfirmar.textContent =
+        "Guardando confirmación...";
 
       try {
-        await fetch(CONFIG.scriptURL, {
-          method: "POST",
-          mode: "no-cors",
-          body: JSON.stringify(datos)
+        const respuesta = await solicitarJSONP({
+          accion: "confirmar",
+          codigo: codigoActual,
+          personas: personas,
+          mensaje: mensaje
         });
 
-        contenedorFormulario.classList.add("oculto");
-        contenedorGracias.classList.remove("oculto");
+        if (!respuesta.ok) {
+          alert(
+            respuesta.mensaje ||
+            "No pudimos guardar la confirmación."
+          );
+
+          return;
+        }
+
+        invitadoActual = respuesta.invitado;
+
+        mostrarPase(
+          invitadoActual,
+          respuesta.yaConfirmado
+        );
 
         lanzarAnimacion();
 
       } catch (error) {
-        console.error(error);
-
-        contenedorFormulario.classList.add("oculto");
-        contenedorError.classList.remove("oculto");
+        alert(
+          "No pudimos guardar tu confirmación. " +
+          "Verifica tu conexión e inténtalo nuevamente."
+        );
 
       } finally {
         botonConfirmar.disabled = false;
         botonConfirmar.textContent = "Confirmar";
       }
-    });
+    }
 
 
-    // ====================================
-    // BOTONES FINALES
-    // ====================================
+    // ==========================================
+    // MOSTRAR PASE
+    // ==========================================
+
+    function mostrarPase(invitado, yaConfirmado) {
+      pantallaCodigo.classList.add("oculto");
+      pantallaConfirmacion.classList.add("oculto");
+      pantallaPase.classList.remove("oculto");
+
+      document.getElementById("paseEvento").textContent =
+        CONFIG.nombreEvento;
+
+      document.getElementById("paseFamilia").textContent =
+        invitado.nombre;
+
+      document.getElementById("paseMesa").textContent =
+        invitado.mesa || "Por asignar";
+
+      document.getElementById("pasePersonas").textContent =
+        invitado.personasConfirmadas;
+
+      const paseMesaBloque =
+        document.getElementById("paseMesaBloque");
+
+      if (CONFIG.mesaHabilitada && invitado.mesa) {
+        paseMesaBloque.classList.remove("oculto");
+      } else {
+        paseMesaBloque.classList.add("oculto");
+      }
+
+      if (yaConfirmado) {
+        document.getElementById("tituloPase").textContent =
+          "Esta invitación ya fue confirmada";
+
+        document.getElementById("textoPase").textContent =
+          "Puedes consultar y guardar nuevamente tu pase.";
+      } else {
+        document.getElementById("tituloPase").textContent =
+          "¡Gracias por confirmar!";
+
+        document.getElementById("textoPase").textContent =
+          "Tu respuesta fue registrada correctamente.";
+      }
+
+      if (
+        CONFIG.qrHabilitado &&
+        invitado.tokenQR
+      ) {
+        generarQR(invitado.tokenQR);
+
+        document
+          .getElementById("zonaQR")
+          .classList
+          .remove("oculto");
+
+        botonGuardarPase.classList.remove("oculto");
+
+      } else {
+        document
+          .getElementById("zonaQR")
+          .classList
+          .add("oculto");
+
+        botonGuardarPase.classList.add("oculto");
+      }
+    }
+
+
+    // ==========================================
+    // GENERAR QR
+    // ==========================================
+
+    function generarQR(token) {
+      const contenedor =
+        document.getElementById("qrContenedor");
+
+      contenedor.innerHTML = "";
+
+      const urlAcceso =
+        `${window.location.origin}${window.location.pathname}` +
+        `?modo=acceso&token=${encodeURIComponent(token)}`;
+
+      qrActual = new QRCode(contenedor, {
+        text: urlAcceso,
+        width: 210,
+        height: 210,
+        colorDark: "#111111",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+
+    // ==========================================
+    // GUARDAR PASE COMO PNG
+    // ==========================================
+
+    botonGuardarPase.addEventListener(
+      "click",
+      guardarPaseComoImagen
+    );
+
+    function guardarPaseComoImagen() {
+      if (!invitadoActual) {
+        return;
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 1080;
+      canvas.height = 1350;
+
+      const contexto = canvas.getContext("2d");
+
+      contexto.fillStyle =
+        CONFIG.colorSecundario || "#ffffff";
+
+      contexto.fillRect(0, 0, canvas.width, canvas.height);
+
+      contexto.fillStyle =
+        CONFIG.colorPrincipal || "#333333";
+
+      contexto.fillRect(0, 0, canvas.width, 180);
+
+      contexto.textAlign = "center";
+
+      contexto.fillStyle = "#ffffff";
+      contexto.font = "bold 52px Arial";
+
+      contexto.fillText(
+        CONFIG.nombreEvento,
+        540,
+        108
+      );
+
+      contexto.fillStyle = "#333333";
+      contexto.font = "32px Arial";
+
+      contexto.fillText(
+        "Pase digital",
+        540,
+        260
+      );
+
+      contexto.fillStyle =
+        CONFIG.colorPrincipal || "#333333";
+
+      contexto.font = "bold 58px Arial";
+
+      contexto.fillText(
+        invitadoActual.nombre,
+        540,
+        355
+      );
+
+      contexto.fillStyle = "#444444";
+      contexto.font = "36px Arial";
+
+      if (
+        CONFIG.mesaHabilitada &&
+        invitadoActual.mesa
+      ) {
+        contexto.fillText(
+          `Mesa: ${invitadoActual.mesa}`,
+          540,
+          445
+        );
+      }
+
+      contexto.fillText(
+        `Accesos: ${invitadoActual.personasConfirmadas}`,
+        540,
+        CONFIG.mesaHabilitada ? 510 : 445
+      );
+
+      const qrCanvas =
+        document.querySelector("#qrContenedor canvas");
+
+      const qrImagen =
+        document.querySelector("#qrContenedor img");
+
+      const dibujarFinal = (imagenQR) => {
+        contexto.fillStyle = "#ffffff";
+
+        contexto.fillRect(
+          325,
+          585,
+          430,
+          430
+        );
+
+        contexto.drawImage(
+          imagenQR,
+          350,
+          610,
+          380,
+          380
+        );
+
+        contexto.fillStyle = "#555555";
+        contexto.font = "28px Arial";
+
+        contexto.fillText(
+          "Presenta este pase al ingresar al evento",
+          540,
+          1090
+        );
+
+        contexto.fillStyle =
+          CONFIG.colorDetalle ||
+          CONFIG.colorPrincipal ||
+          "#333333";
+
+        contexto.fillRect(
+          150,
+          1160,
+          780,
+          4
+        );
+
+        contexto.fillStyle = "#555555";
+        contexto.font = "24px Arial";
+
+        contexto.fillText(
+          "Fox Estudio Digital",
+          540,
+          1235
+        );
+
+        const enlace = document.createElement("a");
+
+        enlace.download =
+          `Pase-${invitadoActual.nombre}`
+            .replace(/\s+/g, "-") +
+          ".png";
+
+        enlace.href = canvas.toDataURL("image/png");
+
+        enlace.click();
+      };
+
+      if (qrCanvas) {
+        dibujarFinal(qrCanvas);
+        return;
+      }
+
+      if (qrImagen) {
+        if (qrImagen.complete) {
+          dibujarFinal(qrImagen);
+        } else {
+          qrImagen.onload = () => dibujarFinal(qrImagen);
+        }
+      }
+    }
+
+
+    // ==========================================
+    // BOTONES
+    // ==========================================
+
+    botonRegresar.addEventListener("click", reiniciar);
 
     botonCerrar.addEventListener("click", () => {
       if (window.history.length > 1) {
         window.history.back();
       } else {
-        window.close();
+        reiniciar();
       }
     });
 
-    botonReintentar.addEventListener("click", () => {
-      contenedorError.classList.add("oculto");
-      contenedorFormulario.classList.remove("oculto");
-    });
+    function reiniciar() {
+      invitadoActual = null;
+      codigoActual = "";
+
+      document.getElementById("codigoInvitacion").value = "";
+      document.getElementById("mensaje").value = "";
+
+      pantallaConfirmacion.classList.add("oculto");
+      pantallaPase.classList.add("oculto");
+      pantallaCodigo.classList.remove("oculto");
+    }
   </script>
 </body>
 </html>
